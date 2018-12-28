@@ -25,6 +25,6 @@ Index path = /public/index.php
 
 ## Version
 
-CI Version : 3.1.9 
-Blade Version 1.1.0
-PHP Version : ^5.6
+* CI Version : 3.1.9 
+* Blade Version 1.1.0
+* PHP Version : ^5.6
