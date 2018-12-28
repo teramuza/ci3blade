@@ -17,6 +17,10 @@ CACHEPATH = /application/cache
 Index path = /public/index.php
 ```
 
+## How to install
+```
+git clone https://github.com/teukuraja/ci3blade
+```
 
 ## Built With
 
