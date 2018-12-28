@@ -1,6 +1,5 @@
-###################
 Codeigniter with Blade
-###################
+=====
 
 ## Getting Started
 
