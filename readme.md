@@ -21,6 +21,18 @@ Index path = /public/index.php
 ```
 git clone https://github.com/teukuraja/ci3blade
 ```
+## How to fix?
+* Cache Folder Permission Denied
+```
+sudo chown $USER:www-data application/cache
+sudo chmod 775 application/cache
+```
+
+* Rewrite Module Disabled
+```
+sudo a2enmod rewrite
+sudo service apache2 restart
+```
 
 ## Built With
 
