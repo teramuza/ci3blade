@@ -19,7 +19,7 @@ Index path = /public/index.php
 
 ## How to install
 ```
-git clone https://github.com/teukuraja/ci3blade
+git clone https://github.com/teukuraja/ci3blade.git
 ```
 ## How to fix?
 * Cache Folder Permission Denied
