@@ -41,6 +41,6 @@ sudo service apache2 restart
 
 ## Version
 
-* CI Version : 3.2.0
+* CI Version : 3.2.0-dev
 * Blade Version 1.1.0
 * PHP Version : ^5.6
