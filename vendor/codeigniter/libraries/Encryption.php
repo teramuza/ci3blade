@@ -29,8 +29,8 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
@@ -482,7 +482,7 @@ class CI_Encryption {
 			$data,
 			$params['handle'],
 			$params['key'],
-			1, // DO NOT TOUCH!
+			OPENSSL_RAW_DATA,
 			$iv
 		);
 
@@ -641,7 +641,7 @@ class CI_Encryption {
 				$data,
 				$params['handle'],
 				$params['key'],
-				1, // DO NOT TOUCH!
+				OPENSSL_RAW_DATA,
 				$iv
 			);
 	}
@@ -928,9 +928,6 @@ class CI_Encryption {
 	{
 		if (self::$func_overload)
 		{
-			// mb_substr($str, $start, null, '8bit') returns an empty
-			// string on PHP 5.3
-			isset($length) OR $length = ($start >= 0 ? self::strlen($str) - $start : -$start);
 			return mb_substr($str, $start, $length, '8bit');
 		}
 

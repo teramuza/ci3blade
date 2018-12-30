@@ -32,27 +32,26 @@
  * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (https://bcit.ca/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
- * @since	Version 2.0.0
+ * @since	Version 3.2.0
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * CodeIgniter APC Caching Class
+ * CodeIgniter APCu Caching Class
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Core
- * @author		EllisLab Dev Team
- * @link
+ * @author		CodeIgniter Dev team
  */
-class CI_Cache_apc extends CI_Driver {
+class CI_Cache_apcu extends CI_Driver {
 
 	/**
 	 * Class constructor
 	 *
 	 * Only present so that an error message is logged
-	 * if APC is not available.
+	 * if APCu is not available.
 	 *
 	 * @return	void
 	 */
@@ -60,7 +59,7 @@ class CI_Cache_apc extends CI_Driver {
 	{
 		if ( ! $this->is_supported())
 		{
-			log_message('error', 'Cache: Failed to initialize APC; extension not loaded/enabled?');
+			log_message('error', 'Cache: Failed to initialize APCu; extension not loaded/enabled?');
 		}
 	}
 
@@ -78,9 +77,16 @@ class CI_Cache_apc extends CI_Driver {
 	public function get($id)
 	{
 		$success = FALSE;
-		$data = apc_fetch($id, $success);
+		$data = apcu_fetch($id, $success);
 
-		return ($success === TRUE) ? $data : FALSE;
+		if ($success === TRUE)
+		{
+			return is_array($data)
+				? $data[0]
+				: $data;
+		}
+
+		return FALSE;
 	}
 
 	// ------------------------------------------------------------------------
@@ -91,12 +97,18 @@ class CI_Cache_apc extends CI_Driver {
 	 * @param	string	$id	Cache ID
 	 * @param	mixed	$data	Data to store
 	 * @param	int	$ttl	Length of time (in seconds) to cache the data
-	 * @param	bool	$raw	Whether to store the raw value (unused)
+	 * @param	bool	$raw	Whether to store the raw value
 	 * @return	bool	TRUE on success, FALSE on failure
 	 */
 	public function save($id, $data, $ttl = 60, $raw = FALSE)
 	{
-		return apc_store($id, $data, (int) $ttl);
+		$ttl = (int) $ttl;
+
+		return apcu_store(
+			$id,
+			($raw === TRUE ? $data : array($data, time(), $ttl)),
+			$ttl
+		);
 	}
 
 	// ------------------------------------------------------------------------
@@ -109,7 +121,7 @@ class CI_Cache_apc extends CI_Driver {
 	 */
 	public function delete($id)
 	{
-		return apc_delete($id);
+		return apcu_delete($id);
 	}
 
 	// ------------------------------------------------------------------------
@@ -123,7 +135,7 @@ class CI_Cache_apc extends CI_Driver {
 	 */
 	public function increment($id, $offset = 1)
 	{
-		return apc_inc($id, $offset);
+		return apcu_inc($id, $offset);
 	}
 
 	// ------------------------------------------------------------------------
@@ -137,7 +149,7 @@ class CI_Cache_apc extends CI_Driver {
 	 */
 	public function decrement($id, $offset = 1)
 	{
-		return apc_dec($id, $offset);
+		return apcu_dec($id, $offset);
 	}
 
 	// ------------------------------------------------------------------------
@@ -149,7 +161,7 @@ class CI_Cache_apc extends CI_Driver {
 	 */
 	public function clean()
 	{
-		return apc_clear_cache('user');
+		return apcu_clear_cache();
 	}
 
 	// ------------------------------------------------------------------------
@@ -157,12 +169,11 @@ class CI_Cache_apc extends CI_Driver {
 	/**
 	 * Cache Info
 	 *
-	 * @param	string	user/filehits
 	 * @return	mixed	array on success, false on failure
 	 */
-	 public function cache_info($type = NULL)
+	 public function cache_info()
 	 {
-		 return apc_cache_info($type);
+		 return apcu_cache_info();
 	 }
 
 	// ------------------------------------------------------------------------
@@ -175,30 +186,21 @@ class CI_Cache_apc extends CI_Driver {
 	 */
 	public function get_metadata($id)
 	{
-		$cache_info = apc_cache_info('user', FALSE);
-		if (empty($cache_info) OR empty($cache_info['cache_list']))
+		$success = FALSE;
+		$stored = apcu_fetch($id, $success);
+
+		if ($success === FALSE OR count($stored) !== 3)
 		{
 			return FALSE;
 		}
 
-		foreach ($cache_info['cache_list'] as &$entry)
-		{
-			if ($entry['info'] !== $id)
-			{
-				continue;
-			}
+		list($data, $time, $ttl) = $stored;
 
-			$success  = FALSE;
-			$metadata = array(
-				'expire' => ($entry['ttl'] ? $entry['mtime'] + $entry['ttl'] : 0),
-				'mtime'  => $entry['ttl'],
-				'data'   => apc_fetch($id, $success)
-			);
-
-			return ($success === TRUE) ? $metadata : FALSE;
-		}
-
-		return FALSE;
+		return array(
+			'expire'  => $time + $ttl,
+			'mtime'   => $time,
+			'data'    => $data
+		);
 	}
 
 	// ------------------------------------------------------------------------
@@ -206,12 +208,12 @@ class CI_Cache_apc extends CI_Driver {
 	/**
 	 * is_supported()
 	 *
-	 * Check to see if APC is available on this system, bail if it isn't.
+	 * Check to see if APCu is available on this system, bail if it isn't.
 	 *
 	 * @return	bool
 	 */
 	public function is_supported()
 	{
-		return (extension_loaded('apc') && ini_get('apc.enabled'));
+		return (extension_loaded('apcu') && ini_get('apc.enabled'));
 	}
 }
