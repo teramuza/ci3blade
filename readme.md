@@ -17,6 +17,19 @@ CACHEPATH = /application/cache
 Index path = /public/index.php
 ```
 
+## How to use
+```
+public function index(){
+
+	//load view
+	return view('filename'); //without extention .blade.php
+
+	//load view with array data
+	$data = array();
+	return view('filename', $data);
+}
+```
+
 ## How to install
 ```
 git clone https://github.com/teukuraja/ci3blade.git
