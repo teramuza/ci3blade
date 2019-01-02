@@ -21,6 +21,19 @@ Index path = /public/index.php
 ```
 git clone https://github.com/teukuraja/ci3blade.git
 ```
+## How to use
+```
+public function index(){
+
+	//load view
+	return view('filename'); //without extention .blade.php
+
+	//load view with array data
+	$data = array();
+	return view('filename', $data);
+}
+```
+
 ## How to fix?
 * Cache Folder Permission Denied
 ```
