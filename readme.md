@@ -31,9 +31,11 @@ public function index(){
 ```
 
 ## How to install
-* Stable Version Download here [CI3Blade v.1.1.0.zip](http://bit.ly/2VE3xpU)
+Stable Version Download here 
+* [CI3Blade v.1.1.0.zip](https://github.com/teukuraja/ci3blade/archive/v1.1.0.zip)
+* [CI3Blade v.1.1.0.tar.gz](https://github.com/teukuraja/ci3blade/archive/v1.1.0.tar.gz)
 
-* Or unstable version (CI 3.2.0-dev) with git clone:
+Or unstable version (CI 3.2.0-dev) with git clone:
 ```
 git clone https://github.com/teukuraja/ci3blade.git
 ```
