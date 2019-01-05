@@ -18,7 +18,7 @@ Index path = /public/index.php
 ```
 
 ## How to install
-Stable Version Download here 
+Stable Version (CI 3.1.9) Download here 
 * [CI3Blade v1.1.0.zip](https://github.com/teukuraja/ci3blade/archive/v1.1.0.zip)
 * [CI3Blade v1.1.0.tar.gz](https://github.com/teukuraja/ci3blade/archive/v1.1.0.tar.gz)
 
