@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	['dbdriver'] The database driver. e.g.: mysqli.
 |			Currently supported:
 |				 cubrid, ibase, mssql, mysql, mysqli, oci8,
-|				 odbc, pdo, postgre, sqlite, sqlite3, sqlsrv
+|				 odbc, pdo, postgre, sqlite3, sqlsrv
 |	['dbprefix'] You can add an optional prefix, which will be added
 |				 to the table name when using the  Query Builder class
 |	['pconnect'] TRUE/FALSE - Whether to use a persistent connection
@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |				'ssl_ca'     - Path to the certificate authority file
 |				'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format
 |				'ssl_cipher' - List of *allowed* ciphers to be used for the encryption, separated by colons (':')
-|				'ssl_verify' - TRUE/FALSE; Whether verify the server certificate or not ('mysqli' only)
+|				'ssl_verify' - TRUE/FALSE; Whether verify the server certificate or not
 |
 |	['compress'] Whether or not to use client compression (MySQL only)
 |	['stricton'] TRUE/FALSE - forces 'Strict Mode' connections
@@ -76,9 +76,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'homestead',
-	'password' => 'homestead',
-	'database' => 'homestead',
+	'username' => '',
+	'password' => '',
+	'database' => '',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
